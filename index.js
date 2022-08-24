@@ -22,7 +22,7 @@ function promptManager() {
         },
         {
             type: 'input',
-            name: 'ManagerId',
+            name: 'managerId',
             message: "What is the manager's employee ID number?",
         },
         {
@@ -123,7 +123,13 @@ function createTeam() {
             case 'Manager': return promptManager();
             case 'Engineer': return promptEngineer();
             case 'Intern': return promptIntern();
-            default: return teamMember;
+            default: return fs.writeFile('generateHtml', generateHtml(teamMember), (err) => {
+                if (err) {
+                    return console.log(err);
+                } else {
+                    console.log('Success!');
+                }
+            });
         }
     })
 
@@ -135,9 +141,9 @@ function createTeam() {
 const init = () => {
     console.log('init');
     createTeam()
-        .then((data) => fs.writeFileSync('generateHtml', generateHtml(data)))
-        .then(() => console.log('Sucessfully wrote generateHtml.'))
-        .catch((err) => console.log(err));
+    // .then((data) => fs.writeFileSync('generateHtml', generateHtml(data)))
+    // .then(() => console.log('Sucessfully wrote generateHtml.'))
+    // .catch((err) => console.log(err));
 };
 
 
