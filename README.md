@@ -22,7 +22,7 @@ The user should clone the repository from GitHub and download Node. This applica
 
 ## Usage 
 Use inquirer from your command line to answer questions about your project.
-View walk through video here - [Screencastify](https://drive.google.com/file/d/1BKyXJX9jFh4Joi15KVfzaLZOtGJ3eVAN/view)<br>
+View walk through video here - [youtu.be](https://youtu.be/NcvoxJWYbmI)<br>
 
 ## Screenshot
 
