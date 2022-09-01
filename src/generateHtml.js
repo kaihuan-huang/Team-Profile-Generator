@@ -5,7 +5,7 @@ const generateManager = manager => {
     <div class="card">
             <div class="card-header">
                 <h3>${manager.getName()}</h3>
-                <h4>Job Title</h4>
+                <h4><i class="fa-solid fa-person"></i>Manager</h4>
             </div>
             <div class="card-body">
                     <p>ID: ${manager.getId()}</p>
@@ -22,7 +22,7 @@ const generateEngineer = engineer => {
     <div class="card">
             <div class="card-header">
                 <h3>${engineer.getName()}</h3>
-                <h4>Job Title</h4>
+                <h4><i class="fa-solid fa-laptop"></i>Engineer</h4>
             </div>
             <div class="card-body">
                     <p>ID: ${engineer.getId()}</p>
@@ -39,7 +39,7 @@ const generateIntern = intern => {
     <div class="card">
             <div class="card-header">
                 <h3>${intern.getName()}</h3>
-                <h4>Job Title</h4>
+                <h4><i class="fa-solid fa-graduation-cap"></i>Intern</h4>
             </div>
             <div class="card-body">
                     <p>ID: ${intern.getId()}</p>
@@ -113,10 +113,11 @@ module.exports = team => {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/da78b9d2c9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="CSS/style.css">
-    <title>Team-Profile-Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <title><i class="fa-light fa-chalkboard-user"></i> Team-Profile-Generator </title>
 </head>
 
 <header class="header">

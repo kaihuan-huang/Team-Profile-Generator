@@ -51,7 +51,6 @@ function promptManager() {
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber)
         teamMember.push(manager);
         createTeam()
-        builtTeam()
     });
 }
 
@@ -74,7 +73,7 @@ function createTeam() {
         switch (userInput.teamType) {
             case 'Engineer': return promptEngineer();
             case 'Intern': return promptIntern();
-            default: return createTeam();
+            default: return builtTeam();
         }
     })
 
@@ -94,12 +93,12 @@ function createTeam() {
             },
             {
                 type: 'input',
-                name: 'ManagerId',
+                name: 'engineerId',
                 message: "What is the engineer's employee ID number?",
             },
             {
                 type: 'input',
-                name: 'managerEmail',
+                name: 'engineerEmail',
                 message: "What is the engineer's Email?",
             },
             {
@@ -148,7 +147,7 @@ function createTeam() {
             const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
             teamMember.push(intern);
             createTeam()
-            builtTeam()
+            
             
         });
     }
