@@ -2,6 +2,7 @@
 //npm require inquirer
 const fs = require('fs');
 const inquirer = require('inquirer');
+
 //require 3 classes
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -9,11 +10,21 @@ const Intern = require('./lib/Intern');
 //will generate to this page
 const generateHtml = require('./src/generateHtml');
 
+//Path method
+const path = require('path');
+const OUTPUT_DIR = path.resolve(__dirname, 'output');
+const outputPath = path.join(OUTPUT_DIR, 'team.html');
+
 //an empty array for team member
 const teamMember = [];
 
 // Create an array of questions for Manager's input
 function promptManager() {
+    console.log(`
+    =================
+    Adding Manager!
+    =================
+    `);
     return inquirer.prompt([
         {
             type: 'input',
@@ -40,116 +51,130 @@ function promptManager() {
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerOfficeNumber)
         teamMember.push(manager);
         createTeam()
-    });
-}
-
-
-
-// Create an array of questions for Engineer's input
-function promptEngineer() {
-    console.log('promptEngineer');
-    return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'engineerName',
-            message: "What is the engineer's name?",
-        },
-        {
-            type: 'input',
-            name: 'ManagerId',
-            message: "What is the engineer's employee ID number?",
-        },
-        {
-            type: 'input',
-            name: 'managerEmail',
-            message: "What is the engineer's Email?",
-        },
-        {
-            type: 'input',
-            name: 'engineerGithub',
-            message: "What is the engineer's Github?",
-        },
-
-    ]).then(data => {
-        const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
-        teamMember.push(engineer);
-        createTeam()
-    });
-}
-
-// Create an array of questions for Engineer's input
-function promptIntern() {
-    return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'internName',
-            message: "What is the intern's name?",
-        },
-        {
-            type: 'input',
-            name: 'internId',
-            message: "What is the intern's employee ID number?",
-        },
-        {
-            type: 'input',
-            name: 'internEmail',
-            message: "What is the intern's Email?",
-        },
-        {
-            type: 'input',
-            name: 'internSchool',
-            message: "What is the intern's school?",
-        },
-
-    ]).then(data => {
-        const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
-        teamMember.push(intern);
-        createTeam()
+        builtTeam()
     });
 }
 
 //create an oop createTeam()function 
 function createTeam() {
+    console.log(`
+    =================
+    Adding employees to the team
+    =================
+    `);
     return inquirer.prompt([
         {
             type: 'list',
             name: 'teamType',
             message: "Which job title would you like you add to your team?",
-            choices: ["Manager", "Engineer", "Intern", "None"]
+            choices: ["Engineer", "Intern", "Finish"]
         },
     ]).then(function (userInput) {
         console.log(userInput);
         switch (userInput.teamType) {
-            case 'Manager': return promptManager();
             case 'Engineer': return promptEngineer();
             case 'Intern': return promptIntern();
-            default: return fs.writeFile('generateHtml', generateHtml(teamMember), (err) => {
-                if (err) {
-                    return console.log(err);
-                } else {
-                    console.log('Success!');
-                }
-            });
+            default: return createTeam();
         }
     })
 
+    // Create an array of questions for Engineer's input
+    function promptEngineer() {
+        console.log(`
+        =================
+        Adding Engineer!
+        =================
+        `);
+        // console.log('promptEngineer');
+        return inquirer.prompt([
+            {
+                type: 'input',
+                name: 'engineerName',
+                message: "What is the engineer's name?",
+            },
+            {
+                type: 'input',
+                name: 'ManagerId',
+                message: "What is the engineer's employee ID number?",
+            },
+            {
+                type: 'input',
+                name: 'managerEmail',
+                message: "What is the engineer's Email?",
+            },
+            {
+                type: 'input',
+                name: 'engineerGithub',
+                message: "What is the engineer's Github?",
+            },
+
+        ]).then(data => {
+            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
+            teamMember.push(engineer);
+            createTeam()
+        });
+    }
+
+    // Create an array of questions for Engineer's input
+    function promptIntern() {
+        console.log(`
+        =================
+        Adding Intern!
+        =================
+        `);
+        return inquirer.prompt([
+            {
+                type: 'input',
+                name: 'internName',
+                message: "What is the intern's name?",
+            },
+            {
+                type: 'input',
+                name: 'internId',
+                message: "What is the intern's employee ID number?",
+            },
+            {
+                type: 'input',
+                name: 'internEmail',
+                message: "What is the intern's Email?",
+            },
+            {
+                type: 'input',
+                name: 'internSchool',
+                message: "What is the intern's school?",
+            },
+
+        ]).then(data => {
+            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
+            teamMember.push(intern);
+            createTeam()
+            builtTeam()
+            
+        });
+    }
+    
 }
 
+function builtTeam() {
+    console.log(`
+    =================
+    Finished building my team!
+    =================
+    `);
+    //Create the output directory if the output path doesn't exist 
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, generateHtml(teamMember),"utf-8");
+}
+
+promptManager()
 
 
-//Create a function to initialize app, using writeFileSync as a promise
-const init = () => {
-    console.log('init');
-    createTeam()
-    // .then((data) => fs.writeFileSync('generateHtml', generateHtml(data)))
-    // .then(() => console.log('Sucessfully wrote generateHtml.'))
-    // .catch((err) => console.log(err));
-};
 
 
-// Function call to initialize app
 
-init();
+
 
 
 
